@@ -1,0 +1,39 @@
+---
+- name: Install packages to monitor users
+  yum: name={{ item }} state=present
+  with_items:
+    - dstat
+  tags:
+    - ftp
+    - ftp-users
+
+- name: Create home root for ftp users 
+  file: path={{ ftp_home_users }} state=directory owner=root group=root
+  tags:
+    - ftp
+    - ftp-users
+
+- name: Create FTP Users 
+  user: 
+    uid: "{{ item.value.uid }}"
+    name: "{{ item.key }}"
+    comment: "Unicred FTP User" 
+    state: present 
+    password: "{{ item.value.pass | password_hash('sha512') }}"
+    home: "{{ ftp_home_users }}/{{ item.key }}"
+    shell: "/sbin/nologin"
+  with_dict: "{{ ftp_users }}"
+  changed_when: False
+  no_log: yes
+  tags:
+    - ftp
+    - ftp-users
+
+- name: Allow ftp users in user_list
+  template: src=user_list.j2 dest={{ ftp_users_allowed }}
+  with_dict: "{{ ftp_users }}"
+  no_log: yes
+  tags:
+    - ftp
+    - ftp-users
+    - ftp-users-allow

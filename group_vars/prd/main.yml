@@ -1,0 +1,10 @@
+---
+## FTP
+
+ftp_users:
+      monitor-ftp:
+        uid: 1100
+        pass: "monitorpass"
+      demo1:
+        uid: 1001
+        pass: "demo1pass"

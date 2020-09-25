@@ -1,0 +1,86 @@
+---
+## Proxy
+proxy_server: 192.168.0.20
+proxy_port: 8080
+proxy_url: http://{{ proxy_server }}:{{ proxy_port }}
+proxy_enabled: True
+proxy_env:
+  http_proxy: "{{ proxy_url }}"
+  https_proxy: "{{ proxy_url }}"
+  no_proxy: "127.0.0.1, localhost"
+
+## SELINUX
+selinux_enabled: True
+selinux_mode: permissive
+
+## FTP
+vsftpd_local_enable: True
+vsftpd_syslog_enable: NO
+vsftpd_service: vsftpd
+vsftpd_options:
+  - key: chroot_local_user
+    value: 'YES'
+  - key: allow_writeable_chroot
+    value: 'YES'
+  - key: xferlog_enable
+    value: 'YES'
+  - key: dual_log_enable
+    value: 'YES'
+  - key: userlist_enable
+    value: 'YES'
+  - key: userlist_file
+    value: "{{ ftp_users_allowed }}"
+  - key: userlist_deny
+    value: 'NO'
+  - key: setproctitle_enable
+    value: 'YES'
+
+ftp_home_users: /data
+ftp_users_allowed: /etc/vsftpd/user_list
+
+
+## Firewall Rules
+firewalld_disabled: true
+firewalld_rules:
+      ssh:
+        port: 22
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      http:
+        port: 80
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      https:
+        port: 443
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      http-admin:
+        port: 8080
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      ftp-data:
+        port: 20
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      ftp:
+        port: 21
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true
+      ftp-passive:
+        port: 4000-5000
+        protocol: tcp
+        state: enabled
+        zone: public
+        permanent: true

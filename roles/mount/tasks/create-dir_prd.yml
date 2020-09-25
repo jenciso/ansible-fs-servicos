@@ -1,0 +1,7 @@
+---
+- name: create dir
+  file: path={{ item }} owner=target group=target state=directory
+  with_items:
+    - "{{ minio_instances['target'].data_dir }}"
+  tags:
+    - ftp

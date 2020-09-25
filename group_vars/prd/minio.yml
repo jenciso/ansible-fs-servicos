@@ -1,0 +1,30 @@
+---
+minio_instances:
+  demo:
+    data_dir: /minio/demo
+    access_key: minio
+    secret_key: minio123
+    command: server /data
+    vhost: ""
+    port: 9000
+  grafana:
+    data_dir: /minio/grafana
+    access_key: FE6C2A0B6A182B8A
+    secret_key: 40C724B1581E3CF9
+    command: server /data
+    vhost: ""
+    port: 9001
+  backup:
+    data_dir: /minio/backup
+    access_key: 4B61AEA0261A752C
+    secret_key: 5B6E79EFC6B96321
+    command: server /data
+    vhost: ""
+    port: 9002
+  target:
+    data_dir: /minio/target
+    access_key: FBC0085B02AC1F71
+    secret_key: 4E96860A713EC20E
+    command: gateway nas /data
+    vhost: ""
+    port: 9003

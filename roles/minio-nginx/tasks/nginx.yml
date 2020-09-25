@@ -1,0 +1,47 @@
+---
+- name: nginx | Install package
+  yum: name=nginx state=present
+  tags:
+    - nginx
+
+- name: nginx | copy nginx.conf
+  template: src={{ item }} dest=/etc/nginx/{{ item }} owner=root mode=440
+  with_items:
+    - nginx.conf
+    - nginx_http.conf
+  notify: restart nginx
+  tags:
+    - nginx
+
+- name: nginx | create dir
+  file: path={{ item }} state=directory
+  with_items:
+    - /etc/nginx/conf.d
+    - /etc/nginx/ssl
+  tags:
+    - nginx 
+
+
+- name: nginx | copy ssl certificates
+  copy: src=ssl/{{ env_site }}/{{ item }} dest=/etc/nginx/ssl/
+  with_items:
+    - certificate-bundle.crt
+    - private.key
+  notify: restart nginx
+  tags:
+    - nginx
+
+
+- name: nginx | copy template minio
+  template: src=conf.d/{{ item }} dest=/etc/nginx/conf.d/{{ item }} owner=root mode=440
+  with_items:
+    - http_minio_.conf
+    - http_00_default_.conf
+  notify: restart nginx
+  tags:
+    - nginx
+
+- name: http service state
+  service: name=nginx state=started enabled=yes
+  tags: 
+    - nginx

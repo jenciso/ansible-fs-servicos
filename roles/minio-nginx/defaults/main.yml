@@ -1,0 +1,17 @@
+---
+## SELINUX 
+selinux_enabled: false
+
+## NGINX STREAM SITES
+
+nginx_ssl_path_common: /etc/ansible/files/ssl-certs
+nginx_debug_level: warn 
+
+#nginx_http_sites:
+#    demo_http:
+#       nginx_server_name: demo.site.com
+#       nginx_ssl: true
+#       nginx_ssl_cert_crt: wildcard_server.crt
+#       nginx_ssl_cert_key: wildcard_server.key
+#       nginx_location_custom: ""
+#       nginx_more_conf: ""

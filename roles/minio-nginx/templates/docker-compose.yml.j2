@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+
+ {% for key, value in minio_instances.iteritems() %}
+  minio-{{ key }}:
+      container_name: minio-{{ key }}
+      image: minio/minio
+      volumes:
+        - "{{ value["data_dir"] }}:/data"
+      environment:
+        - MINIO_ACCESS_KEY={{ value["access_key"] }}
+        - MINIO_SECRET_KEY={{ value["secret_key"] }}
+      command: "{{ value["command"] }}"
+      ports:
+        - "{{ value["port"] }}:9000"
+      restart: always
+
+ {% endfor %}

@@ -1,0 +1,23 @@
+---
+- name: minio | prereq 
+  yum:
+    name: cifs-utils
+    state: present
+  tags:
+    - minio
+ 
+- name: minio | setup directories
+  file: path={{ item }} state=directory
+  with_items:
+    - /data/minio/data
+  tags:
+    - minio
+
+- name: minio | copy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /data/minio/docker-compose.yml
+  notify: restart minio
+  ignore_errors: true
+  tags:
+    - minio

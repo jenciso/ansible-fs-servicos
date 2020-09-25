@@ -1,0 +1,13 @@
+---
+- name: ftp | Install packages
+  yum: name=cifs-utils state=present
+  tags:
+    - ftp
+
+
+- name: ftp | Create directory
+  include: create-dir_{{ env_site }}.yml
+
+
+- name: ftp | Mount CIFS dir
+  include: mount-cifs_{{ env_site }}.yml

@@ -1,0 +1,12 @@
+---
+- name: restart minio
+  shell: docker-compose -f docker-compose.yml up -d
+  args:
+    chdir: /data/minio
+  ignore_errors: true
+  
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes
+
+- name: reload nginx
+  service: name=nginx state=reloaded
