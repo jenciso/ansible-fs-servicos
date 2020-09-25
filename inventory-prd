@@ -1,9 +1,9 @@
-[fs-servicos:vars]
+[fs_servicos:vars]
 env_site=prd
 fs_servicos_hostname=s3.docs-planet.site
 
 [prd:children]
-fs-servicos
+fs_servicos
 
-[fs-servicos]
-10.1.1.1
+[fs_servicos]
+10.64.13.140

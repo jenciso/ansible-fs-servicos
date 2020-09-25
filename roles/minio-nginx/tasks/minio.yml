@@ -1,11 +1,11 @@
 ---
-- name: minio | prereq 
+- name: minio | prereq
   yum:
     name: cifs-utils
     state: present
   tags:
     - minio
- 
+
 - name: minio | setup directories
   file: path={{ item }} state=directory
   with_items:

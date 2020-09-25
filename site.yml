@@ -1,7 +1,7 @@
 ---
 - name: Common
-  hosts: "fs-servicos"
-  remote_user: ansible
+  hosts: all
+  remote_user: centos
   become: true
   roles:
     - firewalld
@@ -9,23 +9,9 @@
   tags:
     - common
 
-
-- name: FTP Server - Service
-  hosts: "fs-servicos"
-  remote_user: ansible
-  become: true
-  roles:
-    - vsftpd-server
-    - ftp-users
-    - mount
-  environment: "{{ proxy_env }}"
-  tags:
-    - ftp
-
-
 - name: Minio - Object Storage
-  hosts: "fs-servicos"
-  remote_user: ansible
+  hosts: all
+  remote_user: centos
   become: true
   roles:
     - { role: docker-ce, when: deploy_docker }

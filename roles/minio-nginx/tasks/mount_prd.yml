@@ -1,8 +1,12 @@
 ---
+- name: ftp | Install packages
+  yum: name=cifs-utils state=present
+
 - name: minio | target
   mount:
     state: mounted
     fstype: cifs
-    opts: "domain=TRT4,username=target,password=T3rr42012$$.."
-    src: "//windows/target"
+    opts: "domain=TRT4,username=target,password=mypassword"
+    src: "//windows.demo.com/target"
     name: "{{ minio_instances['target'].data_dir }}"
+  ignore_errors: true
